@@ -1,0 +1,35 @@
+{
+  "name": "middy-env",
+  "version": "0.0.1",
+  "description": "Environment variable middleware for the middy framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrisandrews7/middy-env.git"
+  },
+  "keywords": [
+    "middy",
+    "middleware",
+    "lambda",
+    "env",
+    "config",
+    "env",
+    "var",
+    "environment",
+    "environment",
+    "variable"
+  ],
+  "author": "Chris Andrews",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chrisandrews7/middy-env/issues"
+  },
+  "homepage": "https://github.com/chrisandrews7/middy-env#readme",
+  "devDependencies": {
+    "jest": "^24.8.0",
+    "middy": "^0.25.1"
+  }
+}
