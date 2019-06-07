@@ -60,7 +60,7 @@ describe('Env Middleware', () => {
     handler({}, {}, (err) => err && done.fail(err));
   });
 
-  test('it caches the environment variable values when cache is set to true', async () => {
+  test('it caches the environment variable values when cache is set to true', done => {
     expect.assertions(2);
     process.env.TEST4 = 'oldvalue';
 
@@ -78,12 +78,15 @@ describe('Env Middleware', () => {
           cache: true,
         })
       );
-      
-      await promisify(handler)({}, {});
-      await promisify(handler)({}, {});
+
+    handler({}, {}, () => {
+      handler({}, {}, () => {
+        done();
+      });
+    });
   });
 
-  test('it gets the environment variable values again when the cache has expired', async () => {
+  test('it gets the environment variable values again when the cache has expired', done => {
     expect.assertions(1);
 
     let executionCount = 0;
@@ -93,7 +96,7 @@ describe('Env Middleware', () => {
       (_, context, callback) => {
         process.env.TEST5 = 'newvalue';
 
-        if(++executionCount === 2) {
+        if (++executionCount === 2) {
           expect(context).toHaveProperty('test', 'newvalue');
         }
 
@@ -108,9 +111,14 @@ describe('Env Middleware', () => {
           cache: true,
         })
       );
-      
-      await promisify(handler)({}, {});
-      await new Promise(resolve => setTimeout(resolve, 2)); // Let the cache expire
-      await promisify(handler)({}, {});
+
+    handler({}, {}, () => {
+      // Let the cache expire
+      setTimeout(() => {
+        handler({}, {}, () => {
+          done();
+        });
+      }, 2);
+    });
   });
 });
