@@ -2,6 +2,8 @@
 
 Environment variable middleware for the [middy](https://github.com/middyjs/middy) framework
 
+[![Build Status](https://travis-ci.org/chrisandrews7/middy-env.svg?branch=master)](https://travis-ci.org/chrisandrews7/middy-env)
+
 ## Install
 
 ```bash
