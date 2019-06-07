@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/chrisandrews7/middy-env#readme",
   "devDependencies": {
+    "coveralls": "^3.0.4",
     "jest": "^24.8.0",
     "middy": "^0.25.1"
   }

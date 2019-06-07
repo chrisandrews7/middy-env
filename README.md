@@ -2,7 +2,7 @@
 
 Environment variable middleware for the [middy](https://github.com/middyjs/middy) framework
 
-[![Build Status](https://travis-ci.org/chrisandrews7/middy-env.svg?branch=master)](https://travis-ci.org/chrisandrews7/middy-env)
+[![Build Status](https://travis-ci.org/chrisandrews7/middy-env.svg?branch=master)](https://travis-ci.org/chrisandrews7/middy-env) [![Coverage Status](https://coveralls.io/repos/github/chrisandrews7/middy-env/badge.svg?branch=master)](https://coveralls.io/github/chrisandrews7/middy-env?branch=master) [![npm version](https://img.shields.io/npm/v/middy-env.svg?style=flat)](https://www.npmjs.com/package/middy-env)
 
 ## Install
 
