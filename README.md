@@ -17,12 +17,10 @@ const handler = (event, context, callback) => {
   callback(null, `Hello ${context.person}`);
 };
 
-const handler = middy(someHandler)
+module.exports = middy(someHandler)
   .use(env({ 
     names: {
       person: 'PERSON'
     }
   });
-
-module.exports = { handler };
 ```
