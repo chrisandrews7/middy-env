@@ -15,11 +15,11 @@ By default parameters are assigned to the function handler's `context` object. T
 
 ## Options
 
-- `cache` (boolean) (optional): Defaults to `false`. Set it to `true` to skip further lookups to environment variables
-- `cacheExpiryInMillis` (int) (optional): Defaults to `undefined`. Use this option to invalidate cached parameter values
-- `names` (object) (required): Map of parameters to fetch from environment, where the key is the destination, and value is the environment variable name.
+- `cache` (boolean) (optional): Defaults to `false`. Set it to `true` to skip further lookups of environment variables
+- `cacheExpiryInMillis` (int) (optional): Defaults to `undefined`. Use this option to invalidate cached values
+- `names` (object) (required): Map of environment variables to parse, where the key is the destination, and value is the environment variable name.
   Example: `{names: {importedKeyName: 'NAME_OF_VAR_IN_ENV'}}`
-- `setToContext` (boolean) (optional): This will assign parameters to the `context` object
+- `setToContext` (boolean) (optional): This will assign the parsed values to the `context` object
   of the function handler rather than to `process.env`. Defaults to `true`
 
 ## Sample Usage
