@@ -1,24 +1,23 @@
-const { promisify } = require('util');
 const middy = require('middy');
 const env = require('./');
 
 describe('Env Middleware', () => {
-  test('it throws when an env var is missing', done => {
+  test('it throws when an env var is missing if no fallback is provided', done => {
     const handler = middy(
       (_, __, callback) => callback()
     )
       .use(
         env({
-          names: {
-            test: 'TEST',
+          values: {
+            test: 'TEST1',
           }
         })
       );
 
     handler({}, {}, (err) => {
-      expect(err).toEqual(new ReferenceError('Environment variable TEST is missing'));
+      expect(err).toEqual(new ReferenceError('Environment variable TEST1 is missing'));
       done();
-    })
+    });
   });
 
   test('it passes the enviroment variable values into context by default', done => {
@@ -31,7 +30,7 @@ describe('Env Middleware', () => {
       })
       .use(
         env({
-          names: {
+          values: {
             test: 'TEST2',
           }
         })
@@ -50,7 +49,7 @@ describe('Env Middleware', () => {
       })
       .use(
         env({
-          names: {
+          values: {
             test: 'TEST3',
           },
           setToContext: false
@@ -60,20 +59,76 @@ describe('Env Middleware', () => {
     handler({}, {}, (err) => err && done.fail(err));
   });
 
+  test('it does not throw when a falsy non undefined envionment value is provided', done => {
+    process.env.TEST4 = '';
+
+    const handler = middy(
+      (_, context) => {
+        expect(context).toHaveProperty('test', '');
+        done();
+      })
+      .use(
+        env({
+          values: {
+            test: 'TEST4',
+          }
+        })
+      );
+
+    handler({}, {}, (err) => err && done.fail(err));
+  });
+
+  test('it type casts the environment variable value', done => {
+    process.env.TEST5 = '123';
+
+    const handler = middy(
+      (_, context) => {
+        expect(context).toHaveProperty('test', 123);
+        done();
+      })
+      .use(
+        env({
+          values: {
+            test: ['TEST5', 'int'],
+          }
+        })
+      );
+
+    handler({}, {}, (err) => err && done.fail(err));
+  });
+
+  test('it uses the fallback value when no environment variable value is found', done => {
+    const handler = middy(
+      (_, context) => {
+        expect(context).toHaveProperty('test', 'fallback');
+        done();
+      }
+    )
+      .use(
+        env({
+          values: {
+            test: ['TEST6', 'string', 'fallback']
+          }
+        })
+      );
+
+    handler({}, {}, (err) => err && done.fail(err));
+  });
+
   test('it caches the environment variable values when cache is set to true', done => {
     expect.assertions(2);
-    process.env.TEST4 = 'oldvalue';
+    process.env.TEST7 = 'oldvalue';
 
     const handler = middy(
       (_, context, callback) => {
-        process.env.TEST4 = 'newvalue';
+        process.env.TEST7 = 'newvalue';
         expect(context).toHaveProperty('test', 'oldvalue');
         callback();
       })
       .use(
         env({
-          names: {
-            test: 'TEST4',
+          values: {
+            test: 'TEST7',
           },
           cache: true,
         })
@@ -90,11 +145,11 @@ describe('Env Middleware', () => {
     expect.assertions(1);
 
     let executionCount = 0;
-    process.env.TEST5 = 'oldvalue';
+    process.env.TEST8 = 'oldvalue';
 
     const handler = middy(
       (_, context, callback) => {
-        process.env.TEST5 = 'newvalue';
+        process.env.TEST8 = 'newvalue';
 
         if (++executionCount === 2) {
           expect(context).toHaveProperty('test', 'newvalue');
@@ -104,8 +159,8 @@ describe('Env Middleware', () => {
       })
       .use(
         env({
-          names: {
-            test: 'TEST5',
+          values: {
+            test: 'TEST8',
           },
           cacheExpiryInMillis: 1,
           cache: true,

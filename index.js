@@ -1,6 +1,9 @@
+const cast = require('./cast');
+
 module.exports = opts => {
   const defaults = {
     setToContext: true,
+    values: {},
     cache: false,
     cacheExpiryInMillis: undefined,
     paramsLoaded: false,
@@ -24,19 +27,6 @@ module.exports = opts => {
   }
 };
 
-const getEnvVars = ({
-  names
-}) => Object.keys(names).reduce((env, key) => {
-  const value = process.env[names[key]];
-
-  if (value === undefined) {
-    throw new ReferenceError('Environment variable ' + names[key] + ' is missing');
-  }
-
-  env[key] = value;
-  return env;
-}, {});
-
 const shouldFetchFromEnv = ({
   paramsLoaded,
   paramsLoadedAt,
@@ -46,11 +36,39 @@ const shouldFetchFromEnv = ({
   if (!cache || !paramsLoaded) {
     return true;
   }
-  
+
   const millisSinceLastLoad = new Date().getTime() - paramsLoadedAt.getTime();
   if (cacheExpiryInMillis && millisSinceLastLoad > cacheExpiryInMillis) {
     return true;
   }
 
   return false;
+}
+
+const getEnvVars = ({
+  values
+}) => Object.keys(values).reduce((env, key) => {
+  const config = values[key];
+
+  if (Array.isArray(config)) {
+    env[key] = getEnvVar(config[0], config[1], config[2]);
+  } else {
+    env[key] = getEnvVar(config);
+  }
+
+  return env;
+}, {});
+
+const getEnvVar = (key, type, fallback) => {
+  const value = process.env[key];
+
+  if (value !== undefined) {
+    return cast(value, type);
+  }
+
+  if (fallback) {
+    return fallback;
+  }
+
+  throw new ReferenceError(`Environment variable ${key} is missing`);
 }
