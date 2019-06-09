@@ -2,7 +2,7 @@ const cast = require('./cast');
 
 describe('Cast', () => {
   test('it throws when the type isnt supported', () => {
-    expect(() => cast('test', 'notsupported')).toThrow('notsupported is not a recognised type');
+    expect(() => cast('test', 'notsupported')).toThrow('notsupported is not a supported type');
   });
 
   test('it returns a string when string is specified', () => {

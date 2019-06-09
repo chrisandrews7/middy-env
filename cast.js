@@ -21,11 +21,11 @@ const types = {
 }
 
 module.exports = (value, type = 'string') => {
-  const convertor = types[type];
+  const castFn = types[type];
 
-  if (!convertor) {
-    throw new TypeError(`${type} is not a recognised type`);
+  if (!castFn) {
+    throw new TypeError(`${type} is not a supported type`);
   }
 
-  return convertor(value);
+  return castFn(value);
 }
