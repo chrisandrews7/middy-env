@@ -1,24 +1,24 @@
 const types = {
-  string: value => '' + value,
-  int: value => {
-    if (!value.match(/^-?\d+$/)) {
+  string: value => `${value}`,
+  int: (value) => {
+    if (!parseInt(value, 10)) {
       throw new TypeError(`${value} is not an integer`);
     }
-    return +value;
+    return parseInt(value, 10);
   },
-  float: value => {
-    if (isNaN(value) || value === '') {
+  float: (value) => {
+    if (!parseFloat(value)) {
       throw new TypeError(`${value} is not a number`);
     }
-    return +value;
+    return parseFloat(value);
   },
-  bool: value => {
+  bool: (value) => {
     if (!(value === 'true' || value === 'false')) {
       throw new TypeError(`${value} is not a boolean`);
     }
     return value === 'true';
-  }
-}
+  },
+};
 
 module.exports = (value, type = 'string') => {
   const castFn = types[type];
@@ -28,4 +28,4 @@ module.exports = (value, type = 'string') => {
   }
 
   return castFn(value);
-}
+};
