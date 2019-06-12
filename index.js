@@ -33,9 +33,9 @@ const getEnvVar = (key, type, fallback) => {
 };
 
 const getEnvVars = ({
-  values,
-}) => Object.keys(values).reduce((env, key) => {
-  const config = values[key];
+  names,
+}) => Object.keys(names).reduce((env, key) => {
+  const config = names[key];
 
   if (Array.isArray(config)) {
     return Object.assign(env, {
@@ -52,7 +52,7 @@ const getEnvVars = ({
 module.exports = (opts) => {
   const defaults = {
     setToContext: true,
-    values: {},
+    names: {},
     cache: false,
     cacheExpiryInMillis: undefined,
     paramsLoaded: false,

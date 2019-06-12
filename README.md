@@ -18,7 +18,7 @@ The specified environment variables will be parsed and passed into the handler.
 - `cacheExpiryInMillis` (int) (optional): Time in milliseconds for values to remain cached. Defaults to `undefined`.
 - `setToContext` (boolean) (optional): This will assign the parsed values to the `context` object
   of the function handler rather than to `process.env`. Defaults to `true`.
-- `values` (object) (required): Map of environment variables to parse, where the key is the destination.  
+- `names` (object) (required): Map of environment variables to parse, where the key is the destination.  
 Either provide just the environment variable key. Or provide the key, type and fallback value e.g. `['KEY', 'string', 'fallbackValue']`.
 
 By default parameters are assigned to the function handler's `context` object. They can instead be assigned to the Node.js `process.env` object by setting the `setToContext` flag to `false`.   
@@ -42,7 +42,7 @@ const handler = (event, context, callback) => {
 
 module.exports = middy(handler)
   .use(env({ 
-    values: {
+    names: {
       firstName: ['FIRST_NAME', 'string', 'World'],
       lastName: 'LAST_NAME'
     },

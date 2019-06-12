@@ -8,7 +8,7 @@ describe('Env Middleware', () => {
     )
       .use(
         env({
-          values: {
+          names: {
             test: 'TEST1',
           },
         }),
@@ -31,7 +31,7 @@ describe('Env Middleware', () => {
     )
       .use(
         env({
-          values: {
+          names: {
             test: 'TEST2',
           },
         }),
@@ -51,7 +51,7 @@ describe('Env Middleware', () => {
     )
       .use(
         env({
-          values: {
+          names: {
             test: 'TEST3',
           },
           setToContext: false,
@@ -72,7 +72,7 @@ describe('Env Middleware', () => {
     )
       .use(
         env({
-          values: {
+          names: {
             test: 'TEST4',
           },
         }),
@@ -92,7 +92,7 @@ describe('Env Middleware', () => {
     )
       .use(
         env({
-          values: {
+          names: {
             test: ['TEST5', 'int'],
           },
         }),
@@ -110,7 +110,7 @@ describe('Env Middleware', () => {
     )
       .use(
         env({
-          values: {
+          names: {
             test: ['TEST6', 'string', 'fallback'],
           },
         }),
@@ -132,7 +132,7 @@ describe('Env Middleware', () => {
     )
       .use(
         env({
-          values: {
+          names: {
             test: 'TEST7',
           },
           cache: true,
@@ -166,7 +166,7 @@ describe('Env Middleware', () => {
     )
       .use(
         env({
-          values: {
+          names: {
             test: 'TEST8',
           },
           cacheExpiryInMillis: 1,
