@@ -71,7 +71,11 @@ module.exports = (opts) => {
       options.paramsLoaded = true;
       options.paramsCache = variables;
       options.paramsLoadedAt = new Date();
-      next();
+
+      // middy v2 removed the next function in favour of simply returning from the function
+      if (next) {
+        next();
+      }
     },
   };
 };

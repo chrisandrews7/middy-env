@@ -30,11 +30,12 @@
   },
   "homepage": "https://github.com/chrisandrews7/middy-env#readme",
   "devDependencies": {
+    "@middy/core": "^2.5.0",
+    "@middy/core-v1": "npm:@middy/core@^1.5.2",
     "coveralls": "^3.0.4",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.17.3",
-    "jest": "^24.8.0",
-    "middy": "^0.25.1"
+    "jest": "^27.0.6"
   }
 }
