@@ -20,6 +20,7 @@ describe('Env Middleware', () => {
   });
 
   test('it passes the enviroment variable values into context by default', async () => {
+    expect.assertions(1);
     process.env.TEST2 = 'testvalue';
 
     const handler = middy(
@@ -39,6 +40,7 @@ describe('Env Middleware', () => {
   });
 
   test('it passes the enviroment variable values into process.env when setToContext is false', async () => {
+    expect.assertions(1);
     process.env.TEST3 = 'testvalue';
 
     const handler = middy(
@@ -59,6 +61,7 @@ describe('Env Middleware', () => {
   });
 
   test('it does not throw when a falsy non undefined envionment value is provided', async () => {
+    expect.assertions(1);
     process.env.TEST4 = '';
 
     const handler = middy(
@@ -78,6 +81,7 @@ describe('Env Middleware', () => {
   });
 
   test('it type casts the environment variable value', async () => {
+    expect.assertions(1);
     process.env.TEST5 = '123';
 
     const handler = middy(
@@ -97,6 +101,8 @@ describe('Env Middleware', () => {
   });
 
   test('it uses the fallback value when no environment variable value is found', async () => {
+    expect.assertions(1);
+
     const handler = middy(
       (_, context) => {
         expect(context).toHaveProperty('test', 'fallback');
@@ -169,6 +175,7 @@ describe('Env Middleware', () => {
   });
 
   test('it is backwards compatible with middy v1', async () => {
+    expect.assertions(1);
     process.env.TEST2 = 'testvalue';
 
     const handler = middyv1(
