@@ -1,6 +1,6 @@
 {
   "name": "middy-env",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Environment variable middleware for the middy framework",
   "main": "index.js",
   "scripts": {
